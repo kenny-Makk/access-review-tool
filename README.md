@@ -79,6 +79,11 @@ python analyze.py      # summarise confirmed findings
 - **Rule A's "expected categories" are also hand-picked**, not derived 
   from any documented role definition — the same judgement-based 
   limitation as Rule C's risky combinations
+- **Does not scale to large organisations as-is.** Reviewing one 
+  finding at a time in a CLI works for a handful of accounts, but a 
+  real 1,000-person organisation would need prioritisation (e.g. a 
+  risk score) so reviewers focus on the highest-risk findings first, 
+  rather than reviewing everything one by one.
 
 ## Possible extensions
 
