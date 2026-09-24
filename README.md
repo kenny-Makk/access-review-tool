@@ -1,8 +1,13 @@
-# Access Review Tool
+# NoMoreGuessing (Access Review Tool)
 
 A small, rule-based tool that models roles and permissions, detects two 
 patterns of access risk, and requires a human to approve or reject each 
 finding before it is confirmed.
+
+> The name comes from what I saw during a real access review: without 
+> documentation, who-has-what-access came down to individual memory and 
+> guesswork. This tool is a small attempt to replace that guesswork with 
+> a repeatable process.
 
 ## Why this exists
 
