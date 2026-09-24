@@ -27,7 +27,9 @@ manual review into something repeatable.
 
 1. **Models** accounts, roles, and permissions (many-to-many, via 
    junction tables)
-2. **Detects** two patterns:
+2. **Detects** three patterns:
+   - **Rule A (over-permissioned roles):** roles that hold access 
+     outside the categories expected for their stated purpose
    - **Rule B (dormant accounts):** accounts still active despite no 
      login in 90+ days
    - **Rule C (risky permission combinations):** roles that combine 
@@ -74,8 +76,9 @@ python analyze.py      # summarise confirmed findings
   by judgement, not tested against real outcomes
 - **No duplicate detection.** Running `rules.py` multiple times creates 
   duplicate findings; this MVP does not yet handle re-runs
-- **Rule A (over-permissioned roles relative to their stated purpose)** 
-  was scoped out of this MVP due to time constraints
+- **Rule A's "expected categories" are also hand-picked**, not derived 
+  from any documented role definition — the same judgement-based 
+  limitation as Rule C's risky combinations
 
 ## Possible extensions
 
