@@ -37,8 +37,34 @@ def run_rules_and_save(session):
         session.add(Finding(rule_type="C", role_id=role.id))
         print(f"[Rule C] {role.name} flagged for risky permission combination")
 
+        for role, extra_categories in find_over_permissioned(session):
+            session.add(Finding(rule_type="A", role_id=role.id))
+            print(f"[Rule A] {role.name} has extra access: {extra_categories}")
+
     session.commit()
 
+EXPECTED_CATEGORIES = {
+    "team_leader": {"raw_hours_data"},
+    "volunteer_support": {"contact_info", "qualifications"},
+    "recruitment_it": {"email_history"},
+}
+
+
+def find_over_permissioned(session):
+    results = []
+    roles = session.scalars(select(Role)).all()
+    for role in roles:
+        stmt = (
+            select(distinct(Permission.sensitivity_category))
+            .join(RolePermission, RolePermission.permission_id == Permission.id)
+            .where(RolePermission.role_id == role.id)
+        )
+        actual_categories = set(session.scalars(stmt).all())
+        expected = EXPECTED_CATEGORIES.get(role.name, set())
+        extra = actual_categories - expected
+        if extra:
+            results.append((role, extra))
+    return results
 
 if __name__ == "__main__":
     engine = create_engine("sqlite:///review.db")

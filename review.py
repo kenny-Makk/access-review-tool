@@ -7,9 +7,12 @@ def describe(finding, session):
     if finding.rule_type == "B":
         acct = session.get(Account, finding.account_id)
         return f"[Rule B] {acct.label} has been dormant since {acct.last_login_at}"
-    else:
+    elif finding.rule_type == "C":
         role = session.get(Role, finding.role_id)
         return f"[Rule C] Role '{role.name}' has a risky permission combination"
+    else:
+        role = session.get(Role, finding.role_id)
+        return f"[Rule A] Role '{role.name}' has over-permissioned access"
 
 
 def review_findings(session):
